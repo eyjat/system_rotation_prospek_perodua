@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "saName": "Sample SaName 1",
+    "phoneNum": "123456789",
+    "locationSA": "Johor",
+    "startDate": "2023-08-10",
+    "endDate": "2023-08-20"
+  },
+  {
+    "id": 2,
+    "saName": "Sample SaName 2",
+    "phoneNum": "987654321",
+    "locationSA": "Kuala Lumpur",
+    "startDate": "2023-08-15",
+    "endDate": "2023-08-25"
+  }
+]
