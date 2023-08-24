@@ -1,3 +1,3 @@
 <?php
-$connection = new mysqli('localhost', 'peroduamy_prospekperodua', 'prospek1234*', 'peroduamy_prospekperodua');
+$connection = new mysqli('localhost', 'usernameDB', 'passDB', 'nameDB');
 ?>
