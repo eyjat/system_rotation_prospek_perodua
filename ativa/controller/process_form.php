@@ -1,5 +1,24 @@
 <?php
-$tableName = "ativaSA"; //set table name here
+session_start();
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+// Initialize selectedLocation in the session if it's not set
+if (!isset($_SESSION['selectedLocation'])) {
+    $_SESSION['selectedLocation'] = '';
+}
+
+// Check if the user has selected a new location
+if (isset($_POST['locationSA']) && $_SESSION['selectedLocation'] !== $_POST['locationSA']) {
+    // Clear the session data related to the assigned salesperson
+    unset($_SESSION['assignedSalesperson']);
+}
+
+// Store the selected location in the session
+$_SESSION['selectedLocation'] = $_POST['locationSA'];
+
+$tableName = "ativaSA"; // set table name here
 include 'db.php';
 
 $prosName = $_POST["prosName"];
@@ -16,7 +35,7 @@ function rotateSalesAgent($location) {
     $sql = "SELECT nameSA, phoneNum FROM ativaSA WHERE locationSA = '$location'";
     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
+    if ($result && $result->num_rows > 0) {
         $agents = array();
         while ($row = $result->fetch_assoc()) {
             $agents[] = $row;
@@ -32,30 +51,39 @@ function rotateSalesAgent($location) {
 
         return array('nameSA' => $assignedAgent, 'phoneNum' => $assignedPhone);
     } else {
+        // Handle the case when no sales agents are found for the location
         return null;
     }
 }
 
 $location = $_POST["locationSA"];
-$assignedAgentData = rotateSalesAgent($location);
 
-if ($assignedAgentData) {
+// Check if the assignedSalesperson field is set in the session
+if (isset($_SESSION['assignedSalesperson'])) {
+    $assignedAgentData = $_SESSION['assignedSalesperson'];
     $assignedAgent = $assignedAgentData['nameSA'];
     $assignedPhone = $assignedAgentData['phoneNum'];
-
-    $updateAgentQuery = "UPDATE ativaSA SET assignedAgent = '$assignedAgent', assignedPhone = '$assignedPhone' WHERE locationSA = '$location'";
-    $conn->query($updateAgentQuery);
 } else {
-    // Fallback: Send WhatsApp to the provided fallback number
-    $assignedAgent = "Admin Perodua.my";
-    $assignedPhone = "01120965467";
+    // Your rotation logic as before
+    $assignedAgentData = rotateSalesAgent($location);
+    if ($assignedAgentData) {
+        $assignedAgent = $assignedAgentData['nameSA'];
+        $assignedPhone = $assignedAgentData['phoneNum'];
+
+        // Store the assigned salesperson in the session
+        $_SESSION['assignedSalesperson'] = $assignedAgentData;
+    } else {
+        // Fallback: Send WhatsApp to the provided fallback number
+        $assignedAgent = "Admin Perodua.my";
+        $assignedPhone = "01120965467";
+    }
 }
 
 $sqlInsert = "INSERT INTO ativaData (prosName, prosNum, prosLocation, curDate, saName) VALUES ('$prosName', '$prosNum', '$prosLocation', '$currentDate', '$assignedAgent')";
 $conn->query($sqlInsert);
 
 // WhatsApp API integration
-$whatsappApiUrl = "https://api.whatsapp.com/send?phone=6$assignedPhone&text=Hai%20saya%20$prosName,%20berminat%20nak%20beli%20ativa.";
+$whatsappApiUrl = "https://api.whatsapp.com/send?phone=6$assignedPhone&text=Hai%20saya%20$prosName,%20berminat%20nak%20beli%20Ativa.";
 
 // Redirect to WhatsApp API URL
 header("Location: $whatsappApiUrl");

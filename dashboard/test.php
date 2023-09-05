@@ -72,9 +72,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['formAction']) && $_PO
     <label for="end_date" class="ml-4 mr-2">End Date:</label>
     <input type="date" id="end_date" name="end_date" class="px-3 py-2 border border-gray-300 rounded-md">
     
-    <button id="filter_btn" class="ml-4 float-right remove-filter bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring focus:ring-blue-300">Apply Filter</button>
+    <button id="filter_btn" class="ml-4 float-right remove-filter bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring focus:ring-blue-300"><i class="fa-solid fa-filter" style="color: #ffffff;"></i><span class="pl-2">Apply Filter</span></button>
     <button id="print_btn" onclick="printTable()" class="ml-4 float-right remove-filter bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring focus:ring-teal-300"><i class="fa-solid fa-print" style="color: #ffffff;"></i><span class="pl-2">Print</span></button>
-    <button id="clear_filter_btn" class="ml-4 float-right remove-filter bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring focus:ring-red-300" style="display: none;">Clear Filter</button>
+    <button id="clear_filter_btn" class="ml-4 float-right remove-filter bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring focus:ring-red-300" style="display: none;"><i class="fa-solid fa-xmark" style="color: #ffffff;"></i><span class="pl-2">Clear Filter</span></button>
 
 </div>
  <!-- Add search input, date inputs, and sales agent dropdown here -->

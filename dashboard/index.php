@@ -146,9 +146,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
                             echo '+' . round($percentageIncreaseLastWeek, 2);
                         }
                         ?>%
-                        <svg class="w-3 h-3 ml-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4"/>
-                        </svg>
+                        
                     </div>
                 </div>
                 <div id="area-chart"></div>

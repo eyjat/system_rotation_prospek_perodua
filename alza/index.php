@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prospect Form</title>
+    <title>Prospect Form Alza</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a6ebcd5253.js" crossorigin="anonymous"></script>
 
@@ -41,7 +41,7 @@
                     <option value="Melaka">Melaka</option>
                     <option value="Negeri Sembilan">Negeri Sembilan</option>
                     <option value="Pahang">Pahang</option>
-                    <option value="Penang">Penang</option>
+                    <option value="Pulau Pinang">Pulau Pinang</option>
                     <option value="Perak">Perak</option>
                     <option value="Perlis">Perlis</option>
                     <option value="Putrajaya">Putrajaya</option>
@@ -57,6 +57,8 @@
             <label for="prosNum" class="block mt-4 mb-2">Phone Number:</label>
             <input type="tel" name="prosNum" class="w-full p-2 border rounded" required
                    pattern="[0-9]{10,}" title="Please enter a valid phone number with at least 10 digits">
+
+            <input type="hidden" name="assignedSalesperson" value="<?= isset($_SESSION['assignedSalesperson']) ? htmlspecialchars(json_encode($_SESSION['assignedSalesperson'])) : '' ?>">
 
             <button type="submit"
                 class="block w-full bg-green-500 text-white font-bold py-3 px-4 mt-8 rounded hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-300"><i

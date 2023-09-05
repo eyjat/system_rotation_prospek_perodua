@@ -71,6 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['formAction']) && $_PO
     <label for="end_date" class="ml-4 mr-2">End Date:</label>
     <input type="date" id="end_date" name="end_date" class="px-3 py-2 border border-gray-300 rounded-md">
     <button id="filter_btn" class="ml-4 float-right remove-filter bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring focus:ring-blue-300">Apply Filter</button>
+    <button id="print_btn" onclick="printTable()" class="ml-4 float-right remove-filter bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring focus:ring-teal-300"><i class="fa-solid fa-print" style="color: #ffffff;"></i><span class="pl-2">Print</span></button>
     <button id="clear_filter_btn" class="ml-4 float-right remove-filter bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring focus:ring-red-300" style="display: none;">Clear Filter</button>
 
 </div>
@@ -133,71 +134,116 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['formAction']) && $_PO
                         });
                     </script>
                     <div class="bg-white p-6 shadow-md rounded-2xl overflow-hidden">
-                        <table class="table-fixed w-full">
-                            <thead class="text-gray-800 bg-gray-100">
-                                <tr>
-                                    <th class="px-3 py-4 text-left rounded-tl-xl rounded-bl-xl">Name</th>
-                                    <th class="px-4 py-3 text-left">Phone No.</th>
-                                    <th class="px-4 py-3 text-left">Location</th>
-                                    <th class="px-4 py-3 text-left">SA Name</th>
-                                    <th class="px-2 py-4 text-left rounded-tr-xl rounded-br-xl">Date</th>
-                                </tr>
-                            </thead>
-                            <tbody id = "tablebody">     
-                            <!--php for  display all lead-->
-                            
-                            <?php
-// Pagination settings
-$itemsPerPage = 15; // Number of leads to display per page
+                         <div id="table_container">
+                            <table class="table-fixed w-full">
+                                <thead class="text-gray-800 bg-gray-100">
+                                    <tr>
+                                        <th class="px-3 py-4 text-left rounded-tl-xl rounded-bl-xl">Name</th>
+                                        <th class="px-4 py-3 text-left">Phone No.</th>
+                                        <th class="px-4 py-3 text-left">Location</th>
+                                        <th class="px-4 py-3 text-left">SA Name</th>
+                                        <th class="px-2 py-4 text-left rounded-tr-xl rounded-br-xl">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id = "tablebody">     
+                                <!--php for  display all lead-->
+                                
+                                <?php
+                                    // Pagination settings
+                                    $itemsPerPage = 15; // Number of leads to display per page
 
-// Calculate total number of pages
-$queryCount = "SELECT COUNT(*) as count FROM $tableName";
-$resultCount = $conn->query($queryCount);
-$rowCount = $resultCount->fetch_assoc()['count'];
-$totalPages = ceil($rowCount / $itemsPerPage);
+                                    // Calculate total number of pages
+                                    $queryCount = "SELECT COUNT(*) as count FROM $tableName";
+                                    $resultCount = $conn->query($queryCount);
+                                    $rowCount = $resultCount->fetch_assoc()['count'];
+                                    $totalPages = ceil($rowCount / $itemsPerPage);
 
-// Get current page from query parameter
-if (isset($_GET['page']) && is_numeric($_GET['page'])) {
-    $currentPage = intval($_GET['page']);
-} else {
-    $currentPage = 1;
-}
+                                    // Get current page from query parameter
+                                    if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+                                        $currentPage = intval($_GET['page']);
+                                    } else {
+                                        $currentPage = 1;
+                                    }
 
-// Calculate the offset for the database query
-$offset = ($currentPage - 1) * $itemsPerPage;
+                                    // Calculate the offset for the database query
+                                    $offset = ($currentPage - 1) * $itemsPerPage;
 
-// Query the database to get the leads for the current page
-$query = "SELECT * FROM $tableName ORDER BY curDate DESC LIMIT $offset, $itemsPerPage";
-$result = $conn->query($query);
+                                    // Query the database to get the leads for the current page
+                                    $query = "SELECT * FROM $tableName ORDER BY curDate DESC LIMIT $offset, $itemsPerPage";
+                                    $result = $conn->query($query);
 
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr class='hover:bg-gray-200'>";
-        echo "<td class='px-4 py-4 border-b border-gray-100'>" . $row["prosName"] . "</td>";
-        echo "<td class='px-4 py-4 border-b border-gray-100'>" . $row["prosNum"] . "</td>";
-        echo "<td class='px-4 py-4 border-b border-gray-100'>" . $row["prosLocation"] . "</td>";
-        echo "<td class='px-4 py-4 border-b border-gray-100'>" . $row["saName"] . "</td>";
-        echo "<td class='px-4 py-4 border-b border-gray-100'>" . $row["curDate"] . "</td>";        echo "</tr>";
-    }
-} else {
-    echo "<tr><td colspan='5' class='border px-4 py-2'>No results found.</td></tr>";
-}
-?>
-                            </tbody>
-                        </table>
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo "<tr class='hover:bg-gray-200'>";
+                                            echo "<td class='px-4 py-4 border-b border-gray-100'>" . $row["prosName"] . "</td>";
+                                            echo "<td class='px-4 py-4 border-b border-gray-100'>" . $row["prosNum"] . "</td>";
+                                            echo "<td class='px-4 py-4 border-b border-gray-100'>" . $row["prosLocation"] . "</td>";
+                                            echo "<td class='px-4 py-4 border-b border-gray-100'>" . $row["saName"] . "</td>";
+                                            echo "<td class='px-4 py-4 border-b border-gray-100'>" . $row["curDate"] . "</td>";        echo "</tr>";
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='5' class='border px-4 py-2'>No results found.</td></tr>";
+                                    }
+                                ?>
+                                </tbody>
+                            </table>
 
-                        <!-- Pagination -->
-                        <div class="pagination flex justify-end mt-4">
-                            <?php for ($page = 1; $page <= $totalPages; $page++) : ?>
-                                <a href="?page=<?php echo $page; ?>"
-                                class="block border border-gray-300 rounded-md px-3 py-1 text-sm text-gray-700
-                                        <?php echo ($page === $currentPage) ? 'bg-blue-500 text-white' : 'hover:bg-gray-200'; ?>
-                                        transition mr-2">
-                                    <?php echo $page; ?>
-                                </a>
-                            <?php endfor; ?>
+                            <!-- Pagination -->
+                            <div class="pagination flex justify-end mt-4">
+                                <?php for ($page = 1; $page <= $totalPages; $page++) : ?>
+                                    <a href="?page=<?php echo $page; ?>"
+                                    class="block border border-gray-300 rounded-md px-3 py-1 text-sm text-gray-700
+                                            <?php echo ($page === $currentPage) ? 'bg-blue-500 text-white' : 'hover:bg-gray-200'; ?>
+                                            transition mr-2">
+                                        <?php echo $page; ?>
+                                    </a>
+                                <?php endfor; ?>
+                            </div>
                         </div>
                     </div>  
+                    <!-- CSS for Print Media -->
+                    <style media="print">
+                        table {
+                            border-collapse: collapse;
+                            width: 100%;
+                        }
+
+                        th, td {
+                            border: 1px solid black; /* Add border to each cell */
+                            padding: 5px; /* Add padding for better readability */
+                        }
+                    </style>
+
+                    <script>
+                        function printTable() {
+                            // Get the table container
+                            var tableContainer = document.getElementById("table_container");
+
+                            // Create a new window for printing
+                            var printWindow = window.open('', '', 'width=600,height=600');
+
+                            // Write the table content to the new window
+                            printWindow.document.open();
+                            printWindow.document.write('<html><head><title>Bezza Prospect</title></head><body>');
+                            printWindow.document.write('<h3>Bezza Prospect</h3>');
+
+                            printWindow.document.write('<style>');
+                            printWindow.document.write('table { border-collapse: collapse; width: 100%; }');
+                            printWindow.document.write('th, td { border: 1px solid black; padding: 5px; }');
+                            printWindow.document.write('</style>');
+
+                            printWindow.document.write('<div>');
+                            printWindow.document.write(tableContainer.innerHTML);
+                            printWindow.document.write('</div>');
+
+                            printWindow.document.write('</body></html>');
+                            printWindow.document.close();
+
+                            // Print the new window
+                            printWindow.print();
+                            printWindow.close();
+                        }
+                    </script>
                 </div>
             </section>
             <!-- Other car model sections here -->
