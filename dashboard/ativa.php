@@ -141,21 +141,21 @@ if (isset($_GET['filter_option']) || isset($_GET['search_query'])) {
                                         }
 
                                         // If no filter or search conditions are set, use the default query
-                                        if (!isset($sql)) {
-                                            $sql = "SELECT * FROM myvi$tableNameSA";
-                                        }
+                                        // if (!isset($sql)) {
+                                        //     $sql = "SELECT * FROM myvi$tableNameSA";
+                                        // }
 
                                         // Calculate the total number of pages
                                         $totalPages = ceil($resultSaList->num_rows / $recordsPerPage);
 
                                         // Calculate the starting and ending page numbers
-                                        $visiblePages = 5; // Number of visible pagination links
+                                        $visiblePages = 1; // Number of visible pagination links
                                         $halfVisible = floor($visiblePages / 2);
                                         $startPage = max(1, $currentPage - $halfVisible);
                                         $endPage = min($totalPages, $startPage + $visiblePages - 1);
 
                                         // Pagination settings
-                                        $recordsPerPage = 6; // Number of records to display per page
+                                        $recordsPerPage = 50; // Number of records to display per page
                                         $currentPage = isset($_GET['page']) ? $_GET['page'] : 1; // Current page number
 
                                         // Calculate the OFFSET for the SQL query
@@ -247,12 +247,12 @@ if (isset($_GET['filter_option']) || isset($_GET['search_query'])) {
                         ?>
                        
                         <!--script for filter active or expired SA-->
-                        <script>
+                        <!-- <script>
                             function filterTable(filterOption) {
                                 // Redirect to the same page with the filter option as a query parameter
                                 window.location.href = 'myvi.php?filter_option=' + filterOption;
                             }
-                        </script>
+                        </script> -->
 
                         
 

@@ -57,7 +57,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
         <div class="ml-4">
             <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                 <span class="sr-only">Open user menu</span>
-                <img class="w-8 h-8 rounded-full" src="https://img.freepik.com/free-icon/user_318-159711.jpg?w=2000" alt="user photo">
+                <img class="w-8 h-8 rounded-full" src="https://a0.anyrgb.com/pngimg/1538/696/material-design-user-profile-account-profile-login-avatar-user-interface-user-button-point.png" alt="user photo">
             </button>
         </div>
 

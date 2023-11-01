@@ -5,6 +5,7 @@ $tableName = $_GET['table'];
 $start_date = $_GET['start_date'];
 $end_date = $_GET['end_date'];
 $saName = $_GET['sa_name']; // Get selected Sales Agent
+$prosLocation = $_GET['prosLocation']; //get selected location prospect
 
 $query = "SELECT * FROM $tableName WHERE 1"; // Start the query with a placeholder condition
 
@@ -12,9 +13,16 @@ if (!empty($start_date) && !empty($end_date)) {
     $query .= " AND curDate BETWEEN '$start_date' AND '$end_date'";
 }
 
+//condition query for selection Sales Agent
 if (!empty($saName)) {
     $query .= " AND saName = '$saName'";
 }
+
+//condition query for selected prospect location
+if (!empty($prosLocation)) {
+    $query .= " AND prosLocation = '$prosLocation'";
+}
+
 $query .= " ORDER BY curDate ASC"; // Add the ORDER BY clause to sort by curDate in ascending order
 
 $result = $conn->query($query);

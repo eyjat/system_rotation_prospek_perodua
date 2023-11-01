@@ -149,13 +149,13 @@ if (isset($_GET['filter_option']) || isset($_GET['search_query'])) {
                                         $totalPages = ceil($resultSaList->num_rows / $recordsPerPage);
 
                                         // Calculate the starting and ending page numbers
-                                        $visiblePages = 5; // Number of visible pagination links
+                                        $visiblePages = 1; // Number of visible pagination links
                                         $halfVisible = floor($visiblePages / 2);
                                         $startPage = max(1, $currentPage - $halfVisible);
                                         $endPage = min($totalPages, $startPage + $visiblePages - 1);
 
                                         // Pagination settings
-                                        $recordsPerPage = 6; // Number of records to display per page
+                                        $recordsPerPage = 50; // Number of records to display per page
                                         $currentPage = isset($_GET['page']) ? $_GET['page'] : 1; // Current page number
 
                                         // Calculate the OFFSET for the SQL query
