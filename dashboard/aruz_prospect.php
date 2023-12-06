@@ -66,6 +66,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['formAction']) && $_PO
             }
         ?>
     </select>
+
+    <!-- dropdown selection for location-->
+    <label for="location_filter" class="mr-2">Location:</label>
+    <select id="location_filter" name="location_filter" class="px-3 py-2 border border-gray-300 rounded-md">
+        <option value="">All</option> <!-- Default option to show all -->
+        <!-- PHP code to populate the dropdown with Sales Agent names -->
+        <?php
+            $queryLocation = "SELECT DISTINCT prosLocation FROM $tableName";
+            $resultLocation = $conn->query($queryLocation);
+
+            while ($rowLocation = $resultLocation->fetch_assoc()) {
+                echo "<option value='" . $rowLocation["prosLocation"] . "'>" . $rowLocation["prosLocation"] . "</option>";
+            }
+        ?>
+    </select>
+
     <label for="start_date" class="mr-2">Start Date:</label>
     <input type="date" id="start_date" name="start_date" class="px-3 py-2 border border-gray-300 rounded-md">
     <label for="end_date" class="ml-4 mr-2">End Date:</label>
@@ -93,6 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['formAction']) && $_PO
                             var startDate = document.getElementById('start_date').value;
                             var endDate = document.getElementById('end_date').value;
                             var saName = document.getElementById('sa_filter').value;
+                            var locationFilter = document.getElementById('location_filter').value; 
                             var xhr = new XMLHttpRequest();
                             xhr.onreadystatechange = function() {
                                 if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -106,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['formAction']) && $_PO
                                 }
                             };
 
-                            xhr.open('GET', 'filter_leads.php?table=' + <?php echo json_encode($tableName); ?> + '&start_date=' + startDate + '&end_date=' + endDate + '&sa_name=' + saName, true);
+                            xhr.open('GET', 'filter_leads.php?table=' + <?php echo json_encode($tableName); ?> + '&start_date=' + startDate + '&end_date=' + endDate + '&sa_name=' + saName + '&prosLocation=' + locationFilter, true);
                             xhr.send();
                         });
 

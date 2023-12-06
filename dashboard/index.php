@@ -12,8 +12,10 @@ if (!isset($_SESSION['admin_logged_in'])) {
 
 <div class="flex-1 p-8 sm:ml-64 mt-10">
     <div class="grid grid-cols-12 gap-6 mt-5">
+
+            <!--card for last month prospect-->    
             <a class="transform hover:scale-105 transition duration-300 shadow rounded-lg col-span-12 sm:col-span-6 xl:col-span-3 intro-y bg-white"
-                href="#">
+                href="last_month_prospect.php">
                 <div class="p-5">
                     <div class="flex justify-between">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-blue-400"
@@ -40,8 +42,10 @@ if (!isset($_SESSION['admin_logged_in'])) {
                     </div>
                 </div>
             </a>
+
+            <!--card for this month prospect-->
             <a class="transform hover:scale-105 transition duration-300 shadow rounded-lg col-span-12 sm:col-span-6 xl:col-span-3 intro-y bg-white"
-                href="#">
+                href="this_month_prospect.php">
                 <div class="p-5">
                     <div class="flex justify-between">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-yellow-400"
@@ -68,9 +72,10 @@ if (!isset($_SESSION['admin_logged_in'])) {
                     </div>
                 </div>
             </a>
-            
+
+            <!--card for yesterday prospect-->
             <a class="transform hover:scale-105 transition duration-300 shadow rounded-lg col-span-12 sm:col-span-6 xl:col-span-3 intro-y bg-white"
-                href="#">
+                href="yesterday_prospect.php">
                 <div class="p-5">
                     <div class="flex justify-between">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-pink-600"
@@ -101,6 +106,8 @@ if (!isset($_SESSION['admin_logged_in'])) {
                     </div>
                 </div>
             </a>
+
+            <!--class for activa sales assistant-->
             <a class="transform hover:scale-105 transition duration-300 shadow rounded-lg col-span-12 sm:col-span-6 xl:col-span-3 intro-y bg-white"
                 href="#">
                 <div class="p-5">

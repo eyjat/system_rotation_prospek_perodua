@@ -214,7 +214,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['formAction']) && $_PO
                             </table>
 
                             <!-- Pagination -->
-                            <div class="pagination flex justify-end mt-4">
+                            <div id="pagination_container" class="flex justify-center flex-wrap mt-4">
                                 <?php for ($page = 1; $page <= $totalPages; $page++) : ?>
                                     <a href="?page=<?php echo $page; ?>"
                                     class="block border border-gray-300 rounded-md px-3 py-1 text-sm text-gray-700

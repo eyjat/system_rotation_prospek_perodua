@@ -146,7 +146,7 @@ if (isset($_GET['filter_option']) || isset($_GET['search_query'])) {
                                         // }
 
                                         // Calculate the total number of pages
-                                        $totalPages = ceil($resultSaList->num_rows / $recordsPerPage);
+                                        //$totalPages = ceil($resultSaList->num_rows / $recordsPerPage);
 
                                         // Calculate the starting and ending page numbers
                                         $visiblePages = 1; // Number of visible pagination links
