@@ -1,4 +1,11 @@
 <?php
+    include 'controller/db.php'; //connection database
+    $tableName = "bezzaData"; //set table name here
+    
+    //retrieve data from table
+    $sqlLead = "SELECT * FROM $tableName";
+    $resultLead = $conn->query($sqlLead);
+
     include 'layout/header.php';
 ?>
 
@@ -22,6 +29,7 @@
                                     <label for="sa_filter" class="mr-2">Month :</label>
                                     <select id="sa_filter" name="sa_filter" class="px-3 py-2 border border-gray-300 rounded-md">
                                         <option value="">All</option> <!-- Default option to show all -->
+                                        <option value="">Januari</option>
                                         <!-- PHP code to populate the dropdown with Sales Agent names -->
                                         <?php
                                             // $querySA = "SELECT DISTINCT saName FROM $tableName";
@@ -119,19 +127,6 @@
                     // ?>
                     </tbody>
                 </table>
-
-                <!-- Pagination -->
-                <div id="pagination_container" class="flex justify-center flex-wrap mt-4">
-                    <?php for ($page = 1; $page <= $totalPages; $page++) : ?>
-                        <a href="?page=<?php echo $page; ?>"
-                        class="block border border-gray-300 rounded-md px-3 py-1 text-sm text-gray-700
-                            <?php echo ($page === $currentPage) ? 'bg-blue-500 text-white' : 'hover:bg-gray-200'; ?>
-                            transition mr-2 mb-2">
-                            <?php echo $page; ?>
-                        </a>
-                    <?php endfor; ?>
-                </div>
-
             </div>
         </div>  
     </body>
